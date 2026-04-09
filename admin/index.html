@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>Migiro Motors Admin</title>
+    <style>
+         :root {
+            --gold: #c9a84c;
+            --dark: #0d0d0d;
+            --card: #171717;
+            --text: #f0ede6;
+            --muted: #9b958d;
+            --border: rgba(201, 168, 76, 0.25);
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Inter, Arial, sans-serif;
+            background: linear-gradient(135deg, #0d0d0d, #181818);
+            color: var(--text);
+            display: grid;
+            place-items: center;
+            padding: 24px;
+        }
+        
+        .shell {
+            width: min(680px, 100%);
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 28px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+        }
+        
+        h1 {
+            margin: 0 0 10px;
+            font-size: 2rem;
+        }
+        
+        p {
+            color: var(--muted);
+            line-height: 1.6;
+        }
+        
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: rgba(201, 168, 76, 0.12);
+            color: var(--gold);
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+        
+        ul {
+            color: var(--muted);
+            padding-left: 18px;
+        }
+        
+        a {
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="shell">
+        <div class="pill">⚙️ Migiro Motors Admin</div>
+        <h1>Manage stock and web content</h1>
+        <p>This admin panel is ready for two people to manage Migiro Motors from phone or desktop with Netlify Identity and Git Gateway.</p>
+        <ul>
+            <li>Manage vehicle stock in <code>data/inventory.json</code></li>
+            <li>Customer enquiries are sent through Netlify Forms</li>
+            <li>Use Netlify <strong>Identity → Invite users</strong> to add the second manager</li>
+            <li>Editorial workflow is enabled for safer review and publishing</li>
+        </ul>
+        <p><strong>Netlify steps:</strong> Enable <code>Identity</code>, enable <code>Git Gateway</code>, invite both managers, then open <code>/admin/</code>.</p>
+        <p><a href="/">← Back to website</a></p>
+    </div>
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script src="https://unpkg.com/decap-cms@^3.5.0/dist/decap-cms.js"></script>
+    <script>
+        if (window.netlifyIdentity) {
+            window.netlifyIdentity.on('init', function(user) {
+                if (!user) {
+                    window.netlifyIdentity.on('login', function() {
+                        document.location.href = '/admin/';
+                    });
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

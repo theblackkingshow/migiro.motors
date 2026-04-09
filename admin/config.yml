@@ -1,0 +1,50 @@
+backend:
+  name: git-gateway
+  branch: main
+
+publish_mode: editorial_workflow
+
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+collections:
+  - name: "inventory"
+    label: "Inventory"
+    delete: false
+    editor:
+      preview: false
+    files:
+      - label: "Vehicle Inventory"
+        name: "cars"
+        file: "data/inventory.json"
+        format: "json"
+        fields:
+          - label: "Cars"
+            name: "cars"
+            widget: "list"
+            summary: "{{fields.name}} — A${{fields.price}}"
+            fields:
+              - { label: "ID", name: "id", widget: "number", value_type: "int" }
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Make", name: "make", widget: "string" }
+              - label: "Body"
+                name: "body"
+                widget: "select"
+                options: ["SUV", "Sedan", "Hatchback", "Ute/Pickup", "Wagon", "Coupe"]
+              - { label: "Year", name: "year", widget: "number", value_type: "int" }
+              - { label: "Kilometres", name: "km", widget: "string" }
+              - { label: "Fuel", name: "fuel", widget: "string" }
+              - { label: "Transmission", name: "trans", widget: "string" }
+              - { label: "Price (AUD)", name: "price", widget: "number", value_type: "int" }
+              - { label: "Origin", name: "origin", widget: "string", default: "Australia" }
+              - { label: "Brand Color", name: "color", widget: "color", default: "#1C4A82", allowInput: true }
+              - label: "Status"
+                name: "status"
+                widget: "select"
+                options: ["available", "reserved", "sold"]
+                default: "available"
+              - label: "Badges"
+                name: "badges"
+                widget: "list"
+                default: ["aus"]
+                field: { label: "Badge", name: "badge", widget: "string" }
