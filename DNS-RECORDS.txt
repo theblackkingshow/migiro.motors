@@ -1,0 +1,7 @@
+Set these at your domain registrar for migiromotors.com.au
+
+Type   Name   Value
+A      @      102.0.7.24
+CNAME  www    migiromotors.com.au
+
+After DNS is saved, wait a few minutes to a few hours for propagation.
