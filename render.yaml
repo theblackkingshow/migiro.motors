@@ -4,21 +4,3 @@ services:
     runtime: static
     buildCommand: echo "Static site ready"
     staticPublishPath: .
-    autoDeployTrigger: commit
-    headers:
-      - path: /*
-        name: X-Frame-Options
-        value: SAMEORIGIN
-      - path: /*
-        name: X-Content-Type-Options
-        value: nosniff
-      - path: /*
-        name: Referrer-Policy
-        value: strict-origin-when-cross-origin
-      - path: /data/*
-        name: Cache-Control
-        value: public, max-age=300
-    routes:
-      - type: redirect
-        source: /admin
-        destination: /admin/
