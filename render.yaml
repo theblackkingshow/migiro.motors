@@ -2,14 +2,9 @@ services:
   - type: web
     name: migiro-motors
     runtime: static
-    repo: https://github.com/theblackkingshow/migiro.motors.git
-    branch: main
-    buildCommand: bash ./render-build.sh
-    staticPublishPath: ./dist
+    buildCommand: echo "Static site ready"
+    staticPublishPath: .
     autoDeployTrigger: commit
-    domains:
-      - migiromotors.com.au
-      - www.migiromotors.com.au
     headers:
       - path: /*
         name: X-Frame-Options
