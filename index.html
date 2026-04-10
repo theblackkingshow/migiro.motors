@@ -1119,7 +1119,7 @@
         
         .launch-grid {
             display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 24px;
             align-items: start;
         }
@@ -2084,6 +2084,23 @@
                     </div>
                     <div class="sql-note">Tables included: vehicles, customers, enquiries, shipments</div>
                 </div>
+                <div class="launch-card reveal reveal-delay-3">
+                    <div class="section-label">Live Hosting</div>
+                    <h3 style="font-size:1.45rem;color:var(--white);">Powered by Nestify Australia</h3>
+                    <div class="launch-domain">🟢 Sydney, Australia — Pro Active</div>
+                    <ul class="launch-list">
+                        <li>✅ Hosted on Nestify cloud infrastructure in <strong style="color:var(--white);">Sydney</strong> for strong Australian reach</li>
+                        <li>✅ Tuned for reliable public access across <strong style="color:var(--white);">East Africa</strong> and <strong style="color:var(--white);">Australia</strong></li>
+                        <li>✅ Current server profile: <strong style="color:var(--white);">2 CPUs</strong> and <strong style="color:var(--white);">4 GB RAM</strong></li>
+                    </ul>
+                    <div class="domain-options">
+                        <span class="domain-pill">Nestify</span>
+                        <span class="domain-pill">Sydney Region</span>
+                        <span class="domain-pill">2 CPUs</span>
+                        <span class="domain-pill">4 GB RAM</span>
+                    </div>
+                    <p style="color:var(--muted);margin-top:14px;line-height:1.7;">Managed hosting, DNS, and support are handled through the server dashboard while the site stays available to customers worldwide.</p>
+                </div>
             </div>
         </div>
     </section>
@@ -2540,11 +2557,17 @@
 
         async function submitNetlifyForm(form) {
             const payload = Object.fromEntries(new FormData(form).entries());
-            await fetch('/', {
+            const response = await fetch('/', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: encodeFormData(payload)
             });
+
+            if (!response.ok) {
+                throw new Error(`Form submission failed: ${response.status}`);
+            }
+
+            return response;
         }
 
         function renderCars(list) {
@@ -2656,15 +2679,17 @@
     }
     async function submitModalForm(e) {
       e.preventDefault();
+      let feedback = '✅ Enquiry sent! We\'ll contact you within 24 hours.';
       try {
         await submitNetlifyForm(e.target);
       } catch (error) {
-        console.warn('Car enquiry submission will complete on Netlify deploy.', error);
+        console.warn('Car enquiry form needs a live form backend.', error);
+        feedback = '⚠️ This enquiry form is not connected on this hosting yet. Please email sales@migiromotors.com.au.';
       }
       closeModalDirect();
       e.target.reset();
       selectedCarId = null;
-      alert('✅ Enquiry sent! We\'ll contact you within 24 hours.');
+      alert(feedback);
     }
 
     // ── Destinations ──
@@ -2775,14 +2800,22 @@
     async function submitForm(e) {
       e.preventDefault();
       const success = document.getElementById('form-success');
+      success.textContent = '⏳ Sending your enquiry...';
+
       try {
         await submitNetlifyForm(e.target);
+        success.textContent = "✅ Thank you! We've received your enquiry and will be in touch within 24 hours.";
       } catch (error) {
-        console.warn('Website enquiry submission will complete on Netlify deploy.', error);
+        console.warn('Website enquiry form needs a live form backend.', error);
+        success.textContent = '⚠️ This form is not connected on this hosting yet. Please email sales@migiromotors.com.au.';
       }
+
       success.classList.add('show');
       e.target.reset();
-      setTimeout(() => success.classList.remove('show'), 6000);
+      setTimeout(() => {
+        success.classList.remove('show');
+        success.textContent = "✅ Thank you! We've received your enquiry and will be in touch within 24 hours.";
+      }, 6000);
     }
 
     // Initial render

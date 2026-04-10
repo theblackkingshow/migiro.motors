@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: migiro-motors
+    runtime: static
+    repo: https://github.com/theblackkingshow/migiro.motors.git
+    branch: main
+    buildCommand: bash ./render-build.sh
+    staticPublishPath: ./dist
+    autoDeployTrigger: commit
+    domains:
+      - migiromotors.com.au
+      - www.migiromotors.com.au
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: SAMEORIGIN
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: Referrer-Policy
+        value: strict-origin-when-cross-origin
+      - path: /data/*
+        name: Cache-Control
+        value: public, max-age=300
+    routes:
+      - type: redirect
+        source: /admin
+        destination: /admin/

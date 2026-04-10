@@ -5,52 +5,70 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex" />
-    <title>Migiro Motors Admin</title>
+    <meta name="theme-color" content="#0d0d0d" />
+    <title>Migiro Motors Admin Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Bebas+Neue&display=swap" rel="stylesheet">
     <style>
          :root {
             --gold: #c9a84c;
+            --gold-dark: #a07828;
             --dark: #0d0d0d;
+            --dark-2: #151515;
             --card: #171717;
+            --card-soft: #1d1d1d;
             --text: #f0ede6;
             --muted: #9b958d;
-            --border: rgba(201, 168, 76, 0.25);
+            --border: rgba(201, 168, 76, 0.22);
+            --success: #31c48d;
+            --warn: #f5b942;
+            --danger: #ef5c5c;
+            --info: #74a7ff;
+            --shadow: 0 18px 50px rgba(0, 0, 0, 0.32);
         }
         
         * {
             box-sizing: border-box;
         }
         
+        html {
+            scroll-behavior: smooth;
+        }
+        
         body {
             margin: 0;
             min-height: 100vh;
             font-family: Inter, Arial, sans-serif;
-            background: linear-gradient(135deg, #0d0d0d, #181818);
+            background: radial-gradient(circle at top left, rgba(201, 168, 76, 0.14), transparent 0, transparent 34%), linear-gradient(135deg, #0d0d0d, #181818 48%, #101010);
             color: var(--text);
-            display: grid;
-            place-items: center;
-            padding: 24px;
-        }
-        
-        .shell {
-            width: min(680px, 100%);
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 18px;
             padding: 28px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
         }
         
-        h1 {
-            margin: 0 0 10px;
-            font-size: 2rem;
+        .page {
+            width: min(1180px, 100%);
+            margin: 0 auto;
+            display: grid;
+            gap: 22px;
         }
         
-        p {
-            color: var(--muted);
-            line-height: 1.6;
+        .hero,
+        .panel,
+        .stat-card {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0)), var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
         }
         
-        .pill {
+        .hero {
+            display: grid;
+            grid-template-columns: 1.3fr 0.9fr;
+            gap: 20px;
+            padding: 26px;
+        }
+        
+        .eyebrow {
             display: inline-flex;
             align-items: center;
             gap: 8px;
@@ -58,49 +76,1200 @@
             border-radius: 999px;
             background: rgba(201, 168, 76, 0.12);
             color: var(--gold);
-            font-weight: 700;
+            font-size: 0.82rem;
+            font-weight: 800;
             margin-bottom: 14px;
         }
         
-        ul {
-            color: var(--muted);
-            padding-left: 18px;
+        h1,
+        h2,
+        h3,
+        p {
+            margin-top: 0;
         }
         
-        a {
+        h1 {
+            font-family: 'Bebas Neue', Impact, sans-serif;
+            letter-spacing: 0.03em;
+            line-height: 1;
+            font-size: clamp(2.4rem, 5vw, 4rem);
+            margin-bottom: 12px;
+        }
+        
+        p {
+            color: var(--muted);
+            line-height: 1.65;
+        }
+        
+        .actions,
+        .meta-row,
+        .quick-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        
+        .actions {
+            margin: 20px 0 14px;
+        }
+        
+        .btn {
+            appearance: none;
+            border: none;
+            border-radius: 10px;
+            padding: 13px 18px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-1px);
+            opacity: 0.95;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: #0d0d0d;
+            box-shadow: 0 10px 24px rgba(201, 168, 76, 0.24);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        
+        .meta-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--muted);
+            font-size: 0.84rem;
+        }
+        
+        .meta-pill strong {
+            color: var(--text);
+        }
+        
+        .panel {
+            padding: 22px;
+        }
+        
+        .hero-side {
+            display: grid;
+            gap: 14px;
+            align-content: start;
+        }
+        
+        .helper-card {
+            background: var(--card-soft);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 14px;
+            padding: 14px;
+        }
+        
+        .helper-card small {
+            display: block;
+            color: var(--muted);
+            margin-bottom: 6px;
+        }
+        
+        .helper-card strong {
+            display: block;
+            color: var(--text);
+        }
+        
+        .checklist {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            gap: 10px;
+        }
+        
+        .checklist li {
+            position: relative;
+            padding-left: 26px;
+            color: var(--muted);
+        }
+        
+        .checklist li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--gold);
+            font-weight: 800;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 16px;
+        }
+        
+        .stat-card {
+            padding: 18px;
+        }
+        
+        .stat-label {
+            font-size: 0.82rem;
+            color: var(--muted);
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .stat-value {
+            font-size: clamp(1.2rem, 2.6vw, 2rem);
+            font-weight: 800;
+            color: var(--text);
+            line-height: 1.2;
+        }
+        
+        .stat-note {
+            margin-top: 6px;
+            font-size: 0.82rem;
+            color: var(--muted);
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1.4fr 0.9fr;
+            gap: 16px;
+        }
+        
+        .panel-head {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            align-items: flex-start;
+            margin-bottom: 14px;
+        }
+        
+        .panel-head h2,
+        .panel h2 {
+            margin-bottom: 6px;
+            font-size: 1.15rem;
+        }
+        
+        .panel-subtext {
+            font-size: 0.86rem;
+            color: var(--muted);
+        }
+        
+        .toolbar {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+        
+        .toolbar-grid {
+            display: grid;
+            grid-template-columns: 1.4fr 0.8fr 0.8fr;
+            gap: 10px;
+        }
+        
+        .field {
+            display: grid;
+            gap: 6px;
+        }
+        
+        .field span {
+            font-size: 0.78rem;
+            color: var(--muted);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .input {
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text);
+            border-radius: 10px;
+            padding: 11px 12px;
+            font: inherit;
+        }
+        
+        .input:focus {
+            outline: 2px solid rgba(201, 168, 76, 0.2);
+            border-color: var(--gold);
+        }
+        
+        .results-note {
+            color: var(--muted);
+            font-size: 0.88rem;
+        }
+        
+        .table-wrap {
+            overflow-x: auto;
+        }
+        
+        .summary-list {
+            display: grid;
+            gap: 10px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .summary-item span {
+            color: var(--muted);
+            font-size: 0.88rem;
+        }
+        
+        .summary-item strong {
+            color: var(--text);
+            font-size: 0.9rem;
+            text-align: right;
+        }
+        
+        .helper-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .tiny-link {
+            color: var(--gold);
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        .editor-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+            margin: 14px 0;
+        }
+        
+        .field.full {
+            grid-column: 1 / -1;
+        }
+        
+        .editor-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 14px 0;
+        }
+        
+        .editor-note {
+            color: var(--muted);
+            font-size: 0.88rem;
+            margin-bottom: 14px;
+        }
+        
+        .mini-btn {
+            border: 1px solid var(--border);
+            background: rgba(201, 168, 76, 0.1);
+            color: var(--gold);
+            padding: 7px 10px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            cursor: pointer;
+        }
+        
+        .mini-btn:hover {
+            background: rgba(201, 168, 76, 0.18);
+        }
+        
+        .draft-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 10px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--muted);
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th,
+        td {
+            text-align: left;
+            padding: 12px 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            vertical-align: top;
+            font-size: 0.92rem;
+        }
+        
+        th {
+            color: var(--muted);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+        
+        td strong {
+            display: block;
+            margin-bottom: 2px;
+        }
+        
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: capitalize;
+        }
+        
+        .status-available {
+            background: rgba(49, 196, 141, 0.14);
+            color: var(--success);
+        }
+        
+        .status-reserved {
+            background: rgba(245, 185, 66, 0.14);
+            color: var(--warn);
+        }
+        
+        .status-sold {
+            background: rgba(239, 92, 92, 0.14);
+            color: var(--danger);
+        }
+        
+        .status-unknown {
+            background: rgba(116, 167, 255, 0.14);
+            color: var(--info);
+        }
+        
+        .note-stack {
+            display: grid;
+            gap: 12px;
+        }
+        
+        .note {
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
+            padding: 14px;
+            background: var(--card-soft);
+        }
+        
+        .note h3 {
+            margin-bottom: 6px;
+            font-size: 0.95rem;
+        }
+        
+        .note p,
+        .note li {
+            font-size: 0.9rem;
+        }
+        
+        .note ul {
+            padding-left: 18px;
+            margin: 8px 0 0;
+            color: var(--muted);
+        }
+        
+        code {
+            background: rgba(255, 255, 255, 0.06);
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-size: 0.86em;
+        }
+        
+        .footer-link {
             color: var(--gold);
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 700;
+        }
+        
+        .empty-row td {
+            color: var(--muted);
+        }
+        
+        @media (max-width: 920px) {
+            body {
+                padding: 16px;
+            }
+            .hero,
+            .content-grid,
+            .toolbar-grid,
+            .editor-grid {
+                grid-template-columns: 1fr;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+        
+        @media (max-width: 560px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero,
+            .panel,
+            .stat-card {
+                border-radius: 16px;
+            }
+            th,
+            td {
+                padding-left: 6px;
+                padding-right: 6px;
+            }
         }
     </style>
 </head>
 
 <body>
-    <div class="shell">
-        <div class="pill">⚙️ Migiro Motors Admin</div>
-        <h1>Manage stock and web content</h1>
-        <p>This admin panel is ready for two people to manage Migiro Motors from phone or desktop with Netlify Identity and Git Gateway.</p>
-        <ul>
-            <li>Manage vehicle stock in <code>data/inventory.json</code></li>
-            <li>Customer enquiries are sent through Netlify Forms</li>
-            <li>Use Netlify <strong>Identity → Invite users</strong> to add the second manager</li>
-            <li>Editorial workflow is enabled for safer review and publishing</li>
-        </ul>
-        <p><strong>Netlify steps:</strong> Enable <code>Identity</code>, enable <code>Git Gateway</code>, invite both managers, then open <code>/admin/</code>.</p>
-        <p><a href="/">← Back to website</a></p>
-    </div>
+    <main class="page">
+        <section class="hero">
+            <div>
+                <div class="eyebrow">⚙️ Migiro Motors Admin Dashboard</div>
+                <h1>Manage stock, publishing, and updates from one screen.</h1>
+                <p>This dashboard pulls a live summary from <code>data/inventory.json</code> and gives both managers a clean starting point on phone or desktop before opening the editor.</p>
+
+                <div class="actions">
+                    <button class="btn btn-primary" id="open-editor-btn" type="button">Open CMS editor</button>
+                    <a class="btn btn-secondary" href="/">View website</a>
+                </div>
+
+                <div class="meta-row">
+                    <div class="meta-pill">📦 Sync <strong id="sync-status">Loading inventory…</strong></div>
+                    <div class="meta-pill">🔐 Identity <strong id="identity-status">Checking…</strong></div>
+                </div>
+            </div>
+
+            <aside class="hero-side">
+                <div class="panel" style="padding:16px; box-shadow:none;">
+                    <h2>Quick checklist</h2>
+                    <ul class="checklist">
+                        <li>Sign in with Netlify Identity</li>
+                        <li>Update the vehicle list in the CMS editor</li>
+                        <li>Review and publish changes safely</li>
+                        <li>Check the live site after publishing</li>
+                    </ul>
+                </div>
+
+                <div class="helper-card">
+                    <small>Best workflow</small>
+                    <strong>/admin/ → Open CMS editor → Publish → Refresh site</strong>
+                </div>
+            </aside>
+        </section>
+
+        <section class="stats-grid">
+            <article class="stat-card">
+                <span class="stat-label">Total vehicles</span>
+                <div class="stat-value" id="stat-total">--</div>
+                <div class="stat-note">All stock records</div>
+            </article>
+            <article class="stat-card">
+                <span class="stat-label">Available now</span>
+                <div class="stat-value" id="stat-available">--</div>
+                <div class="stat-note">Ready for enquiries</div>
+            </article>
+            <article class="stat-card">
+                <span class="stat-label">Top make</span>
+                <div class="stat-value" id="stat-makes">--</div>
+                <div class="stat-note">Most represented brand</div>
+            </article>
+            <article class="stat-card">
+                <span class="stat-label">Average price</span>
+                <div class="stat-value" id="stat-average">--</div>
+                <div class="stat-note">Across current stock</div>
+            </article>
+            <article class="stat-card">
+                <span class="stat-label">Reserved / sold</span>
+                <div class="stat-value" id="stat-closed">--</div>
+                <div class="stat-note">Non-active listings</div>
+            </article>
+            <article class="stat-card">
+                <span class="stat-label">Visible stock value</span>
+                <div class="stat-value" id="stat-value">--</div>
+                <div class="stat-note">Estimated AUD total</div>
+            </article>
+        </section>
+
+        <section class="content-grid">
+            <article class="panel">
+                <div class="panel-head">
+                    <div>
+                        <h2>Inventory snapshot</h2>
+                        <div class="panel-subtext">Live view from <code>../data/inventory.json</code></div>
+                    </div>
+                    <div class="quick-actions">
+                        <button class="btn btn-secondary" id="refresh-btn" type="button">Refresh</button>
+                        <a class="btn btn-secondary" href="../data/inventory.json" target="_blank" rel="noreferrer">Open JSON</a>
+                    </div>
+                </div>
+
+                <div class="toolbar">
+                    <div class="toolbar-grid">
+                        <label class="field">
+                            <span>Search</span>
+                            <input class="input" id="search-input" type="search" placeholder="Search make, model, body or origin" />
+                        </label>
+                        <label class="field">
+                            <span>Status</span>
+                            <select class="input" id="status-filter">
+                                <option value="all">All statuses</option>
+                                <option value="available">Available</option>
+                                <option value="reserved">Reserved</option>
+                                <option value="sold">Sold</option>
+                            </select>
+                        </label>
+                        <label class="field">
+                            <span>Sort</span>
+                            <select class="input" id="sort-by">
+                                <option value="newest">Newest first</option>
+                                <option value="price-high">Highest price</option>
+                                <option value="price-low">Lowest price</option>
+                                <option value="make">Make A–Z</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="results-note" id="results-note">Loading records…</div>
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Vehicle</th>
+                                <th>Status</th>
+                                <th>Price</th>
+                                <th>Notes</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventory-body">
+                            <tr class="empty-row">
+                                <td colspan="5">Loading inventory records…</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </article>
+
+            <aside class="panel">
+                <div class="panel-head">
+                    <div>
+                        <h2>Quick car editor</h2>
+                        <div class="panel-subtext">Edit a vehicle here, then copy or download the updated JSON draft.</div>
+                    </div>
+                    <div class="draft-pill" id="draft-status">No local draft yet</div>
+                </div>
+
+                <div class="editor-grid">
+                    <label class="field">
+                        <span>ID</span>
+                        <input class="input" id="car-id" type="number" min="1" />
+                    </label>
+                    <label class="field full">
+                        <span>Vehicle name</span>
+                        <input class="input" id="car-name" type="text" placeholder="Toyota LandCruiser 200 GXL" />
+                    </label>
+                    <label class="field">
+                        <span>Make</span>
+                        <input class="input" id="car-make" type="text" placeholder="Toyota" />
+                    </label>
+                    <label class="field">
+                        <span>Body</span>
+                        <select class="input" id="car-body">
+                            <option value="SUV">SUV</option>
+                            <option value="Sedan">Sedan</option>
+                            <option value="Hatchback">Hatchback</option>
+                            <option value="Ute/Pickup">Ute/Pickup</option>
+                            <option value="Wagon">Wagon</option>
+                            <option value="Coupe">Coupe</option>
+                        </select>
+                    </label>
+                    <label class="field">
+                        <span>Year</span>
+                        <input class="input" id="car-year" type="number" min="1900" max="2099" />
+                    </label>
+                    <label class="field">
+                        <span>Kilometres</span>
+                        <input class="input" id="car-km" type="text" placeholder="62,000" />
+                    </label>
+                    <label class="field">
+                        <span>Fuel</span>
+                        <input class="input" id="car-fuel" type="text" placeholder="Diesel" />
+                    </label>
+                    <label class="field">
+                        <span>Transmission</span>
+                        <input class="input" id="car-trans" type="text" placeholder="Auto" />
+                    </label>
+                    <label class="field">
+                        <span>Price (AUD)</span>
+                        <input class="input" id="car-price" type="number" min="0" step="100" />
+                    </label>
+                    <label class="field">
+                        <span>Origin</span>
+                        <input class="input" id="car-origin" type="text" placeholder="Australia" />
+                    </label>
+                    <label class="field">
+                        <span>Status</span>
+                        <select class="input" id="car-status">
+                            <option value="available">Available</option>
+                            <option value="reserved">Reserved</option>
+                            <option value="sold">Sold</option>
+                        </select>
+                    </label>
+                    <label class="field">
+                        <span>Brand color</span>
+                        <input class="input" id="car-color" type="color" value="#1C4A82" />
+                    </label>
+                    <label class="field full">
+                        <span>Badges (comma separated)</span>
+                        <input class="input" id="car-badges" type="text" placeholder="aus, hot, new" />
+                    </label>
+                </div>
+
+                <div class="editor-actions">
+                    <button class="btn btn-primary" id="save-car-btn" type="button">Save draft</button>
+                    <button class="btn btn-secondary" id="new-car-btn" type="button">New vehicle</button>
+                    <button class="btn btn-secondary" id="copy-json-btn" type="button">Copy JSON</button>
+                    <button class="btn btn-secondary" id="download-json-btn" type="button">Download JSON</button>
+                </div>
+
+                <p class="editor-note" id="editor-help">Select a vehicle from the table to edit it here. Draft changes stay in this browser until you copy/download them or publish in the CMS.</p>
+
+                <div class="note-stack">
+                    <div class="note">
+                        <h3>System snapshot</h3>
+                        <ul class="summary-list" id="summary-list">
+                            <li class="summary-item"><span>Loading</span><strong>Fetching inventory…</strong></li>
+                        </ul>
+                        <p style="margin-top:10px;">Last sync: <strong id="last-updated">Waiting for refresh…</strong></p>
+                    </div>
+
+                    <div class="note">
+                        <h3>What to edit</h3>
+                        <ul>
+                            <li>Vehicle stock lives in <code>data/inventory.json</code></li>
+                            <li>Draft edits can be copied or downloaded from this page</li>
+                            <li>Use the CMS button above when ready to publish live</li>
+                        </ul>
+                    </div>
+
+                    <div class="note">
+                        <h3>Quick links</h3>
+                        <div class="helper-links">
+                            <a class="tiny-link" href="/">Live website</a>
+                            <a class="tiny-link" href="../data/inventory.json" target="_blank" rel="noreferrer">Inventory JSON</a>
+                            <a class="tiny-link" href="https://app.netlify.com/" target="_blank" rel="noreferrer">Netlify</a>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </section>
+    </main>
+
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    <script src="https://unpkg.com/decap-cms@^3.5.0/dist/decap-cms.js"></script>
     <script>
-        if (window.netlifyIdentity) {
-            window.netlifyIdentity.on('init', function(user) {
-                if (!user) {
-                    window.netlifyIdentity.on('login', function() {
-                        document.location.href = '/admin/';
-                    });
-                }
+        const inventoryBody = document.getElementById('inventory-body');
+        const syncStatus = document.getElementById('sync-status');
+        const identityStatus = document.getElementById('identity-status');
+        const openEditorBtn = document.getElementById('open-editor-btn');
+        const refreshBtn = document.getElementById('refresh-btn');
+        const searchInput = document.getElementById('search-input');
+        const statusFilter = document.getElementById('status-filter');
+        const sortBy = document.getElementById('sort-by');
+        const resultsNote = document.getElementById('results-note');
+        const summaryList = document.getElementById('summary-list');
+        const lastUpdated = document.getElementById('last-updated');
+        const draftStatus = document.getElementById('draft-status');
+        const editorHelp = document.getElementById('editor-help');
+        const saveCarBtn = document.getElementById('save-car-btn');
+        const newCarBtn = document.getElementById('new-car-btn');
+        const copyJsonBtn = document.getElementById('copy-json-btn');
+        const downloadJsonBtn = document.getElementById('download-json-btn');
+        const carIdInput = document.getElementById('car-id');
+        const carNameInput = document.getElementById('car-name');
+        const carMakeInput = document.getElementById('car-make');
+        const carBodyInput = document.getElementById('car-body');
+        const carYearInput = document.getElementById('car-year');
+        const carKmInput = document.getElementById('car-km');
+        const carFuelInput = document.getElementById('car-fuel');
+        const carTransInput = document.getElementById('car-trans');
+        const carPriceInput = document.getElementById('car-price');
+        const carOriginInput = document.getElementById('car-origin');
+        const carStatusInput = document.getElementById('car-status');
+        const carColorInput = document.getElementById('car-color');
+        const carBadgesInput = document.getElementById('car-badges');
+
+        const DRAFT_STORAGE_KEY = 'migiro-admin-draft-inventory';
+
+        let currentUser = null;
+        let cmsLoaded = false;
+        let allCars = [];
+        let selectedCarId = null;
+
+        function escapeHtml(value) {
+            return String(value ?? '').replace(/[&<>"']/g, function(char) {
+                return ({
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#39;'
+                })[char];
             });
         }
+
+        function formatCurrency(value) {
+            return new Intl.NumberFormat('en-AU', {
+                style: 'currency',
+                currency: 'AUD',
+                maximumFractionDigits: 0
+            }).format(Number(value) || 0);
+        }
+
+        function formatDate(value) {
+            return new Intl.DateTimeFormat('en-AU', {
+                dateStyle: 'medium',
+                timeStyle: 'short'
+            }).format(value);
+        }
+
+        function getStatusClass(status) {
+            const key = String(status || 'available').toLowerCase();
+            if (key === 'available') return 'status-available';
+            if (key === 'reserved') return 'status-reserved';
+            if (key === 'sold') return 'status-sold';
+            return 'status-unknown';
+        }
+
+        function getTopEntry(cars, field) {
+            const counts = cars.reduce((acc, car) => {
+                const value = (car[field] || 'Unknown').toString().trim();
+                acc[value] = (acc[value] || 0) + 1;
+                return acc;
+            }, {});
+
+            return Object.entries(counts).sort((a, b) => b[1] - a[1])[0] || null;
+        }
+
+        function nextCarId() {
+            return allCars.reduce((max, car) => Math.max(max, Number(car.id) || 0), 0) + 1;
+        }
+
+        function sanitizeCar(car) {
+            return {
+                id: Number(car.id) || nextCarId(),
+                name: String(car.name || '').trim(),
+                make: String(car.make || '').trim(),
+                body: String(car.body || 'SUV'),
+                year: Number(car.year) || '',
+                km: String(car.km || '').trim(),
+                fuel: String(car.fuel || '').trim(),
+                trans: String(car.trans || '').trim(),
+                price: Number(car.price) || 0,
+                origin: String(car.origin || '').trim(),
+                color: String(car.color || '#1C4A82'),
+                status: String(car.status || 'available').toLowerCase(),
+                badges: Array.isArray(car.badges) ? car.badges.filter(Boolean) : String(car.badges || '')
+                    .split(',')
+                    .map(item => item.trim())
+                    .filter(Boolean)
+            };
+        }
+
+        function blankCar() {
+            return {
+                id: nextCarId(),
+                name: '',
+                make: '',
+                body: 'SUV',
+                year: new Date().getFullYear(),
+                km: '',
+                fuel: 'Petrol',
+                trans: 'Auto',
+                price: 0,
+                origin: 'Australia',
+                color: '#1C4A82',
+                status: 'available',
+                badges: ['aus']
+            };
+        }
+
+        function updateIdentity(user) {
+            currentUser = user || null;
+            identityStatus.textContent = currentUser ? `Signed in${currentUser.email ? ` as ${currentUser.email}` : ''}` : 'Signed out';
+            openEditorBtn.textContent = currentUser ? 'Open CMS editor' : 'Sign in to edit';
+        }
+
+        function setDraftStatus(message) {
+            draftStatus.textContent = message;
+        }
+
+        function fillEditor(car) {
+            const safeCar = sanitizeCar(car);
+            selectedCarId = safeCar.id;
+            carIdInput.value = safeCar.id;
+            carNameInput.value = safeCar.name;
+            carMakeInput.value = safeCar.make;
+            carBodyInput.value = safeCar.body;
+            carYearInput.value = safeCar.year;
+            carKmInput.value = safeCar.km;
+            carFuelInput.value = safeCar.fuel;
+            carTransInput.value = safeCar.trans;
+            carPriceInput.value = safeCar.price;
+            carOriginInput.value = safeCar.origin;
+            carStatusInput.value = safeCar.status;
+            carColorInput.value = safeCar.color || '#1C4A82';
+            carBadgesInput.value = (safeCar.badges || []).join(', ');
+        }
+
+        function readEditorForm() {
+            return sanitizeCar({
+                id: carIdInput.value,
+                name: carNameInput.value,
+                make: carMakeInput.value,
+                body: carBodyInput.value,
+                year: carYearInput.value,
+                km: carKmInput.value,
+                fuel: carFuelInput.value,
+                trans: carTransInput.value,
+                price: carPriceInput.value,
+                origin: carOriginInput.value,
+                status: carStatusInput.value,
+                color: carColorInput.value,
+                badges: carBadgesInput.value
+            });
+        }
+
+        function renderStats(cars) {
+            const total = cars.length;
+            const available = cars.filter(car => (car.status || 'available').toLowerCase() === 'available').length;
+            const closed = cars.filter(car => ['reserved', 'sold'].includes((car.status || '').toLowerCase())).length;
+            const value = cars.reduce((sum, car) => sum + (Number(car.price) || 0), 0);
+            const average = total ? value / total : 0;
+            const topMake = getTopEntry(cars, 'make');
+
+            document.getElementById('stat-total').textContent = total;
+            document.getElementById('stat-available').textContent = available;
+            document.getElementById('stat-closed').textContent = closed;
+            document.getElementById('stat-value').textContent = formatCurrency(value);
+            document.getElementById('stat-average').textContent = formatCurrency(average);
+            document.getElementById('stat-makes').textContent = topMake ? `${topMake[0]} (${topMake[1]})` : '—';
+        }
+
+        function renderSummary(cars) {
+            if (!cars.length) {
+                summaryList.innerHTML = '<li class="summary-item"><span>No data</span><strong>Inventory unavailable</strong></li>';
+                return;
+            }
+
+            const topMake = getTopEntry(cars, 'make');
+            const topBody = getTopEntry(cars, 'body');
+            const newest = [...cars].sort((a, b) => (b.year || 0) - (a.year || 0) || (b.id || 0) - (a.id || 0))[0];
+            const priciest = [...cars].sort((a, b) => (Number(b.price) || 0) - (Number(a.price) || 0))[0];
+
+            const items = [
+                ['Top make', topMake ? `${topMake[0]} (${topMake[1]})` : '—'],
+                ['Popular body', topBody ? `${topBody[0]} (${topBody[1]})` : '—'],
+                ['Newest listing', newest ? `${newest.year || '—'} · ${newest.name || 'Vehicle'}` : '—'],
+                ['Highest price', priciest ? formatCurrency(priciest.price) : '—']
+            ];
+
+            summaryList.innerHTML = items.map(([label, value]) => `
+                <li class="summary-item">
+                    <span>${escapeHtml(label)}</span>
+                    <strong>${escapeHtml(value)}</strong>
+                </li>`).join('');
+        }
+
+        function getFilteredCars() {
+            const query = searchInput.value.trim().toLowerCase();
+            const status = statusFilter.value;
+            const sortMode = sortBy.value;
+
+            const filtered = allCars.filter(car => {
+                const matchesStatus = status === 'all' || (car.status || 'available').toLowerCase() === status;
+                if (!matchesStatus) return false;
+                if (!query) return true;
+
+                const haystack = [car.name, car.make, car.body, car.origin, car.fuel, car.trans, (car.badges || []).join(' ')]
+                    .filter(Boolean)
+                    .join(' ')
+                    .toLowerCase();
+
+                return haystack.includes(query);
+            });
+
+            filtered.sort((a, b) => {
+                if (sortMode === 'price-high') return (Number(b.price) || 0) - (Number(a.price) || 0);
+                if (sortMode === 'price-low') return (Number(a.price) || 0) - (Number(b.price) || 0);
+                if (sortMode === 'make') return String(a.make || '').localeCompare(String(b.make || '')) || String(a.name || '').localeCompare(String(b.name || ''));
+                return (b.year || 0) - (a.year || 0) || (b.id || 0) - (a.id || 0);
+            });
+
+            return filtered;
+        }
+
+        function renderInventory(cars) {
+            if (!cars.length) {
+                inventoryBody.innerHTML = `
+                    <tr class="empty-row">
+                        <td colspan="5">No vehicles match the current filters.</td>
+                    </tr>`;
+                resultsNote.textContent = allCars.length ? '0 vehicles match the selected filters.' : 'No vehicle records were found yet.';
+                return;
+            }
+
+            resultsNote.textContent = `${cars.length} of ${allCars.length} vehicle${allCars.length === 1 ? '' : 's'} shown`;
+
+            const rows = cars.map(car => `
+                <tr>
+                    <td>
+                        <strong>${escapeHtml(car.name || 'Untitled vehicle')}</strong>
+                        <span style="color: var(--muted);">${escapeHtml(car.make || 'Unknown make')} · ${escapeHtml(car.body || 'Vehicle')}</span>
+                    </td>
+                    <td><span class="status-pill ${getStatusClass(car.status)}">${escapeHtml(car.status || 'available')}</span></td>
+                    <td>${formatCurrency(car.price)}</td>
+                    <td style="color: var(--muted);">${escapeHtml(car.year || '—')} · ${escapeHtml(car.km || 'KM n/a')} · ${escapeHtml(car.origin || 'Origin n/a')}</td>
+                    <td><button class="mini-btn" type="button" data-edit-id="${Number(car.id) || 0}">Edit</button></td>
+                </tr>`).join('');
+
+            inventoryBody.innerHTML = rows;
+        }
+
+        function applyFilters() {
+            renderInventory(getFilteredCars());
+        }
+
+        function persistDraft() {
+            try {
+                localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify({ cars: allCars }));
+                setDraftStatus('Local draft saved');
+            } catch (error) {
+                console.warn('Could not persist local draft.', error);
+                setDraftStatus('Draft saved for this session');
+            }
+        }
+
+        function loadStoredDraft() {
+            try {
+                const raw = localStorage.getItem(DRAFT_STORAGE_KEY);
+                if (!raw) return null;
+                const payload = JSON.parse(raw);
+                const cars = Array.isArray(payload) ? payload : Array.isArray(payload.cars) ? payload.cars : [];
+                return cars.map((car, index) => sanitizeCar({ id: car.id || index + 1, ...car }));
+            } catch (error) {
+                console.warn('Stored draft could not be restored.', error);
+                return null;
+            }
+        }
+
+        function saveCarDraft() {
+            const draftCar = readEditorForm();
+
+            if (!draftCar.name) {
+                alert('Please enter a vehicle name before saving.');
+                carNameInput.focus();
+                return;
+            }
+
+            const duplicate = allCars.find(car => Number(car.id) === Number(draftCar.id) && Number(car.id) !== Number(selectedCarId));
+            if (duplicate) {
+                alert('That vehicle ID already exists. Please use a different ID.');
+                carIdInput.focus();
+                return;
+            }
+
+            const index = allCars.findIndex(car => Number(car.id) === Number(selectedCarId));
+            if (index >= 0) {
+                allCars[index] = draftCar;
+            } else {
+                allCars.push(draftCar);
+            }
+
+            selectedCarId = draftCar.id;
+            renderStats(allCars);
+            renderSummary(allCars);
+            applyFilters();
+            fillEditor(draftCar);
+            persistDraft();
+            syncStatus.textContent = 'Local draft updated';
+            lastUpdated.textContent = `${formatDate(new Date())} (local draft)`;
+            editorHelp.textContent = `${draftCar.name || 'Vehicle'} updated in the dashboard draft. Copy/download the JSON or publish in the CMS when ready.`;
+        }
+
+        function createNewCar() {
+            const car = blankCar();
+            selectedCarId = null;
+            fillEditor(car);
+            editorHelp.textContent = 'Creating a new vehicle draft. Fill in the details and save when ready.';
+            setDraftStatus('Ready for a new draft');
+        }
+
+        async function copyInventoryJson() {
+            const payload = JSON.stringify({ cars: allCars }, null, 2);
+            try {
+                await navigator.clipboard.writeText(payload);
+                setDraftStatus('JSON copied');
+                editorHelp.textContent = 'Updated inventory JSON was copied to your clipboard.';
+            } catch (error) {
+                console.warn('Clipboard copy failed.', error);
+                alert('Clipboard copy failed. Please use Download JSON instead.');
+            }
+        }
+
+        function downloadInventoryJson() {
+            const blob = new Blob([JSON.stringify({ cars: allCars }, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'inventory.json';
+            link.click();
+            URL.revokeObjectURL(url);
+            setDraftStatus('JSON downloaded');
+            editorHelp.textContent = 'Your updated inventory file has been downloaded.';
+        }
+
+        function editCarById(id) {
+            const car = allCars.find(entry => Number(entry.id) === Number(id));
+            if (!car) return;
+            fillEditor(car);
+            editorHelp.textContent = `Editing ${car.name || 'vehicle'} (ID ${car.id}). Save draft to update the dashboard instantly.`;
+            setDraftStatus(`Editing ID ${car.id}`);
+        }
+
+        async function loadInventory() {
+            syncStatus.textContent = 'Loading inventory…';
+            resultsNote.textContent = 'Loading records…';
+
+            try {
+                const response = await fetch('../data/inventory.json', { cache: 'no-store' });
+                if (!response.ok) {
+                    throw new Error(`Inventory request failed: ${response.status}`);
+                }
+
+                const payload = await response.json();
+                const cars = Array.isArray(payload) ? payload : Array.isArray(payload.cars) ? payload.cars : [];
+                const storedDraft = loadStoredDraft();
+
+                allCars = (storedDraft && storedDraft.length ? storedDraft : cars.map((car, index) => sanitizeCar({ id: car.id || index + 1, ...car })));
+
+                renderStats(allCars);
+                renderSummary(allCars);
+                applyFilters();
+                fillEditor(allCars[0] || blankCar());
+
+                const stamp = formatDate(new Date());
+                syncStatus.textContent = storedDraft && storedDraft.length ? 'Loaded saved local draft' : `Synced ${stamp}`;
+                lastUpdated.textContent = stamp;
+                setDraftStatus(storedDraft && storedDraft.length ? 'Local draft restored' : 'Live inventory loaded');
+            } catch (error) {
+                console.error('Inventory dashboard failed to load.', error);
+                allCars = [];
+                renderStats([]);
+                renderSummary([]);
+                renderInventory([]);
+                fillEditor(blankCar());
+                syncStatus.textContent = 'Could not load inventory';
+                lastUpdated.textContent = 'Refresh failed';
+                setDraftStatus('Inventory unavailable');
+                inventoryBody.innerHTML = `
+                    <tr class="empty-row">
+                        <td colspan="5">Inventory could not be loaded. Please refresh or verify the file path.</td>
+                    </tr>`;
+            }
+        }
+
+        function ensureCmsLoaded() {
+            if (cmsLoaded || document.getElementById('decap-cms-script')) {
+                window.location.hash = '#/collections/inventory';
+                return;
+            }
+
+            cmsLoaded = true;
+            const script = document.createElement('script');
+            script.id = 'decap-cms-script';
+            script.src = 'https://unpkg.com/decap-cms@^3.5.0/dist/decap-cms.js';
+            script.onload = function() {
+                window.location.hash = '#/collections/inventory';
+            };
+            script.onerror = function() {
+                cmsLoaded = false;
+                alert('The CMS editor could not be loaded. Please refresh and try again.');
+            };
+            document.body.appendChild(script);
+        }
+
+        function openEditor() {
+            if (currentUser) {
+                ensureCmsLoaded();
+                return;
+            }
+
+            sessionStorage.setItem('openCmsAfterLogin', 'true');
+            if (window.netlifyIdentity) {
+                window.netlifyIdentity.open('login');
+            } else {
+                ensureCmsLoaded();
+            }
+        }
+
+        openEditorBtn.addEventListener('click', openEditor);
+        refreshBtn.addEventListener('click', loadInventory);
+        searchInput.addEventListener('input', applyFilters);
+        statusFilter.addEventListener('change', applyFilters);
+        sortBy.addEventListener('change', applyFilters);
+        saveCarBtn.addEventListener('click', saveCarDraft);
+        newCarBtn.addEventListener('click', createNewCar);
+        copyJsonBtn.addEventListener('click', copyInventoryJson);
+        downloadJsonBtn.addEventListener('click', downloadInventoryJson);
+        inventoryBody.addEventListener('click', function(event) {
+            const button = event.target.closest('[data-edit-id]');
+            if (!button) return;
+            editCarById(Number(button.dataset.editId));
+        });
+
+        if (window.netlifyIdentity) {
+            window.netlifyIdentity.on('init', function(user) {
+                updateIdentity(user);
+                if (user && sessionStorage.getItem('openCmsAfterLogin') === 'true') {
+                    sessionStorage.removeItem('openCmsAfterLogin');
+                    ensureCmsLoaded();
+                }
+            });
+
+            window.netlifyIdentity.on('login', function(user) {
+                updateIdentity(user);
+                sessionStorage.setItem('openCmsAfterLogin', 'true');
+                document.location.href = '/admin/';
+            });
+
+            window.netlifyIdentity.on('logout', function() {
+                updateIdentity(null);
+            });
+        } else {
+            updateIdentity(null);
+        }
+
+        loadInventory();
     </script>
 </body>
 
